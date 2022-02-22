@@ -1,0 +1,59 @@
+﻿# Veja http://help.github.com/ignore-files/ para saber mais sobre o gitignore.
+
+# Dependencias e pacotes
+## .NET
+bin/
+obj/
+*.dll
+*.exe
+packages/
+
+## NET core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Arquivos gerados por IDE's/editores de texto
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
+.vscode/
+
+# IDE - Visual Studio
+## Arquivos de Usuário
+*.suo
+*.user
+*.useroscache
+*.sln.dockstates
+.vs/
+
+## MonoDevelop/ Xamarin Studio
+*.userprefs
+
+# Windows Installer Files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Arquivos de Sistemas Operacionais
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Outros
+*.dbmdl
+*.jfm
+*.pubxml
+
+#CodeCoverage e SonarQube
+coverage.*
+.sonarqube
+/coveragereport
