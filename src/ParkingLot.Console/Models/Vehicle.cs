@@ -60,7 +60,6 @@
         /// Framework, entre outros benefícios.
         /// </summary>
         public string Color { get; set; }
-
         public double Largura { get; set; }
         public double CurrentSpeed { get; set; }
         public string Model { get; set; }
@@ -94,6 +93,24 @@
         public void Break(int tempoSeg)
         {
             CurrentSpeed -= (tempoSeg * 15);
+        }
+
+        public void UpdateVehicleInfos(Vehicle vehicleUpdate)
+        {
+            Owner = vehicleUpdate.Owner;
+            Model = vehicleUpdate.Model;
+            Color = vehicleUpdate.Color;
+            Largura = vehicleUpdate.Largura;
+        }
+
+        public override string ToString()
+        {
+            return $"Report Vehicle: \n" +
+                   $"Vehicle Type: {Type} \n" +
+                   $"Owner: {Owner} \n" +
+                   $"Model: {Model}\n" +
+                   $"Color: {Color} \n" +
+                   $"Plate: {Plate} \n";
         }
 
         #endregion Methods

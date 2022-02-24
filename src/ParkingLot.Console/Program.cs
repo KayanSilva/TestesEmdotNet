@@ -25,7 +25,7 @@ internal class Program
     {
         Console.Clear();
         Console.WriteLine(" Veículos Estacionados");
-        foreach (Vehicle v in yard.vehicles)
+        foreach (Vehicle v in yard.Vehicles)
         {
             // placa, proprietario, hora
             Console.WriteLine("Placa :{0}", v.Plate);
@@ -33,7 +33,7 @@ internal class Program
             Console.WriteLine("Hora de entrada :{0:HH:mm:ss}", v.HoraEntrada);
             Console.WriteLine("********************************************");
         }
-        if (yard.vehicles.Count == 0)
+        if (yard.Vehicles.Count == 0)
         {
             Console.WriteLine("Não há veículos estacionados no momento...");
         }
@@ -77,7 +77,7 @@ internal class Program
     {
         Console.WriteLine("Dados da Motocicleta");
         Vehicle moto = new Vehicle();
-        moto.Type = VehicleType.Motocicleta;
+        moto.Type = VehicleType.Motorcycle;
         //preeencher placa,cor,hora,entrada e proprietário
         Console.Write("Digite os dados da placa (XXX-9999): ");
         try
@@ -107,7 +107,7 @@ internal class Program
     {
         Console.WriteLine("Dados do Automovél");
         Vehicle carro = new Vehicle();
-        carro.Type = VehicleType.Automovel;
+        carro.Type = VehicleType.Car;
         //preeencher placa,cor,hora,entrada e proprietário.
         Console.Write("Digite os dados da placa (XXX-9999): ");
         try
