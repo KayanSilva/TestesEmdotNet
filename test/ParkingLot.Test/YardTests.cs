@@ -1,16 +1,31 @@
-﻿using ParkingLot.Models;
+﻿using ParkingLot.Console.Models;
+using ParkingLot.Models;
+using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ParkingLot.Test
 {
-    public class YardTests
+    public class YardTests : IDisposable
     {
+        private Vehicle _vehicle;
+        private Yard _yard;
+        private ITestOutputHelper _testOutputHelper;
+
+        public YardTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+            _testOutputHelper.WriteLine("Constructor invoke");
+            _vehicle = new Vehicle();
+            _yard = new Yard { OperatorYard = new Operator { Name = "Luis Marciano" } };
+        }
+
+
         [Fact]
         public void ValidateBilling()
         {
             //Arrange
-            var yard = new Yard();
-            Vehicle andreVehicle = new()
+            _vehicle = new()
             {
                 Owner = "André Silva",
                 Type = VehicleType.Car,
@@ -19,11 +34,11 @@ namespace ParkingLot.Test
                 Plate = "NEA-1505"
             };
 
-            yard.CheckIn(andreVehicle);
-            yard.CheckOut(andreVehicle.Plate);
+            _yard.CheckIn(_vehicle);
+            _yard.CheckOut(_vehicle.Plate);
 
             //Act
-            var billing = yard.TotalBilling();
+            var billing = _yard.TotalBilling();
 
             //Arrange
             Assert.Equal(2, billing);
@@ -35,8 +50,7 @@ namespace ParkingLot.Test
         public void MultiplesValidateBilling(string Owner, string Plate, string Color, string Model)
         {
             //Arrange
-            Yard yard = new();
-            var vehicle = new Vehicle()
+            _vehicle = new Vehicle()
             {
                 Owner = Owner,
                 Type = VehicleType.Car,
@@ -45,11 +59,11 @@ namespace ParkingLot.Test
                 Plate = Plate
             };
 
-            yard.CheckIn(vehicle);
-            yard.CheckOut(vehicle.Plate);
+            _yard.CheckIn(_vehicle);
+            _yard.CheckOut(_vehicle.Plate);
 
             //Act
-            var billing = yard.TotalBilling();
+            var billing = _yard.TotalBilling();
 
             //Arrange
             Assert.Equal(2, billing);
@@ -61,8 +75,7 @@ namespace ParkingLot.Test
         public void SearchVehicleInTheYard(string Owner, string Plate, string Color, string Model)
         { 
             //Arrange
-            Yard yard = new();
-            var vehicle = new Vehicle()
+            _vehicle = new Vehicle
             {
                 Owner = Owner,
                 Type = VehicleType.Car,
@@ -71,21 +84,20 @@ namespace ParkingLot.Test
                 Plate = Plate
             };
 
-            yard.CheckIn(vehicle);
+            _yard.CheckIn(_vehicle);
 
             //Act
-            var consulted = yard.SearchVehicleInTheYard(Plate);
+            var consulted = _yard.SearchVehicleInTheYard(_vehicle.TicketId);
 
             //Act
-            Assert.Equal(Plate, consulted?.Plate);
+            Assert.Contains("### Ticket Park Alura ###", consulted?.Ticket);
         }
 
         [Fact]
         public void UpdateVehicle()
         {
             //Arrange
-            Yard yard = new();
-            var vehicle = new Vehicle()
+            _vehicle = new Vehicle
             {
                 Owner = "José Augusto",
                 Type = VehicleType.Car,
@@ -94,7 +106,7 @@ namespace ParkingLot.Test
                 Plate = "ZXC-8524"
             };
 
-            yard.CheckIn(vehicle);
+            _yard.CheckIn(_vehicle);
 
             var updatedvehicle = new Vehicle
             {
@@ -106,10 +118,15 @@ namespace ParkingLot.Test
             };
 
             //Act
-            var updated = yard.UpdateVehicle(updatedvehicle);
+            var updated = _yard.UpdateVehicle(updatedvehicle);
 
             //Assert
             Assert.Equal(updatedvehicle.Color, updated?.Color);
+        }
+
+        public void Dispose()
+        {
+            _testOutputHelper.WriteLine("Dispose invoke");
         }
     }
 }

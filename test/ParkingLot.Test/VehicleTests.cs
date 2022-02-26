@@ -1,36 +1,42 @@
 using ParkingLot.Models;
+using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace ParkingLot.Test
 {
-    public class VehicleTests
+    public class VehicleTests : IDisposable
     {
-        [Fact(DisplayName = "Test about method speedUp in Vehicle class")]
+        private Vehicle _vehicle;
+        private ITestOutputHelper _testOutputHelper;
+
+        public VehicleTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+            _testOutputHelper.WriteLine("Constructor invoke");
+            _vehicle = new Vehicle();
+        }
+
+        [Fact]
         [Trait("Function", "SpeedUp")]
         public void SpeedUp()
         {
-            //Arrange
-            var vehicle = new Vehicle();
-
             //Act
-            vehicle.SpeedUp(10);
+            _vehicle.SpeedUp(10);
 
             //Assert
-            Assert.Equal(100, vehicle.CurrentSpeed);
+            Assert.Equal(100, _vehicle.CurrentSpeed);
         }
 
         [Fact]
         [Trait("Function", "Break")]
         public void Break()
         {
-            //Arrange
-            var vehicle = new Vehicle();
-
             //Act
-            vehicle.Break(10);
+            _vehicle.Break(10);
 
             //Assert
-            Assert.Equal(-150, vehicle.CurrentSpeed);
+            Assert.Equal(-150, _vehicle.CurrentSpeed);
         }
 
         [Fact(Skip = "Ignore this test")]
@@ -39,23 +45,57 @@ namespace ParkingLot.Test
         }
 
         [Fact]
-        public void UpdateVehicleInfos()
+        public void ReportVehicle()
         {
             //Arrange
-            var vehicle = new Vehicle
+            _vehicle = new Vehicle
             {
                 Owner = "Carlos Pereira",
                 Plate = "ZAP-4532",
                 Color = "Black",
                 Model = "Variant",
-                Type =  VehicleType.Car
+                Type = VehicleType.Car
             };
 
             //Act
-            string data = vehicle.ToString();
+            string data = _vehicle.ToString();
 
             //Assert
             Assert.Contains("Vehicle Type: Car", data);
+        }
+
+        [Fact]
+        public void OwerNameWithLessThreeCharacters()
+        {
+            //Arrange
+            var ownerName = "BC";
+
+            //Assert
+            Assert.Throws<FormatException>(
+                //Act
+                () => new Vehicle(ownerName)
+            );
+        }
+
+        [Fact]
+        public void ExceptionAboutFourCharacterInPlate()
+        {
+            //Arrange
+            var plate = "AAAAAAAA";
+
+            
+            //Act
+            var message = Assert.Throws<FormatException>(
+                () => new Vehicle().Plate = plate 
+            );
+
+            //Assert
+            Assert.Equal("O 4° caractere deve ser um hífen", message.Message);
+        }
+
+        public void Dispose()
+        {
+            _testOutputHelper.WriteLine("Dispose invoke");
         }
     }
 }

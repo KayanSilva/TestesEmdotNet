@@ -30,7 +30,7 @@ internal class Program
             // placa, proprietario, hora
             Console.WriteLine("Placa :{0}", v.Plate);
             Console.WriteLine("Proprietário :{0}", v.Owner);
-            Console.WriteLine("Hora de entrada :{0:HH:mm:ss}", v.HoraEntrada);
+            Console.WriteLine("Hora de entrada :{0:HH:mm:ss}", v.CheckIn);
             Console.WriteLine("********************************************");
         }
         if (yard.Vehicles.Count == 0)
@@ -95,7 +95,7 @@ internal class Program
         moto.Color = Console.ReadLine();
         Console.Write("Digite o nome do proprietário: ");
         moto.Owner = Console.ReadLine();
-        moto.HoraEntrada = DateTime.Now;
+        moto.CheckIn = DateTime.Now;
         moto.SpeedUp(5);
         moto.Break(5);
         yard.CheckIn(moto);
@@ -124,7 +124,7 @@ internal class Program
         carro.Color = Console.ReadLine();
         Console.Write("Digite o nome do proprietário: ");
         carro.Owner = Console.ReadLine();
-        carro.HoraEntrada = DateTime.Now;
+        carro.CheckIn = DateTime.Now;
         carro.SpeedUp(5);
         carro.Break(5);
         yard.CheckIn(carro);

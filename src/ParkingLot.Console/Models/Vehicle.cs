@@ -7,10 +7,14 @@
         private string _placa;
         private string _proprietario;
         private VehicleType _tipo;
+        private string _ticket;
 
         #endregion Fields
 
         #region Properties
+
+        public string TicketId { get; set; }
+        public string Ticket { get => _ticket; set => _ticket = value; }
 
         public string Plate
         {
@@ -63,9 +67,18 @@
         public double Largura { get; set; }
         public double CurrentSpeed { get; set; }
         public string Model { get; set; }
-        public string Owner { get; set; }
-        public DateTime HoraEntrada { get; set; }
-        public DateTime HoraSaida { get; set; }
+        public string Owner
+        {
+            get { return _proprietario; }
+            set
+            {
+                if (value.Length < 3)
+                    throw new FormatException("The owner name must contain more than three characters");
+                _proprietario = value;
+            }
+        }
+        public DateTime CheckIn { get; set; }
+        public DateTime CheckOut { get; set; }
         public VehicleType Type { get => _tipo; set => _tipo = value; }
 
         #endregion Properties
@@ -76,9 +89,9 @@
         {
         }
 
-        public Vehicle(string proprietario)
+        public Vehicle(string owner)
         {
-            Owner = proprietario;
+            Owner = owner;
         }
 
         #endregion Constructors
@@ -102,6 +115,8 @@
             Color = vehicleUpdate.Color;
             Largura = vehicleUpdate.Largura;
         }
+
+        
 
         public override string ToString()
         {
