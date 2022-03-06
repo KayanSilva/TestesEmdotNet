@@ -73,7 +73,7 @@ namespace ParkingLot.Test
         [InlineData("Héctor Cucoro", "BBB-8888", "Black", "Mustang")]
         [InlineData("Marcos Bonetts", "AAA-9999", "Yellow", "Vectar")]
         public void SearchVehicleInTheYard(string Owner, string Plate, string Color, string Model)
-        { 
+        {
             //Arrange
             _vehicle = new Vehicle
             {
@@ -124,9 +124,6 @@ namespace ParkingLot.Test
             Assert.Equal(updatedvehicle.Color, updated?.Color);
         }
 
-        public void Dispose()
-        {
-            _testOutputHelper.WriteLine("Dispose invoke");
-        }
+        public void Dispose() => _testOutputHelper.WriteLine("Dispose invoke");
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ParkingLot.Models;
 
-internal class Program
+public class Program
 {
     // Cria uma lista de objetos do tipo veículos, para armazenar
     // os veículos (automovéis e motos) que estão no estacionamento;
